@@ -1,0 +1,10 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2016, French National Center for Scientific Research (CNRS)
+# Distributed under the (new) BSD License. See LICENSE for more info.
+
+from .version import version as __version__
+
+from .mainwindow import MainWindow
+
+
+from . nodelauncher import NodeLauncher

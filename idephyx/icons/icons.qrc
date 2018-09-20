@@ -1,0 +1,11 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+            <file alias="media-record.svg">png/media-record.svg</file>
+            <file alias="media-playback-stop.svg">png/media-playback-stop.svg</file>
+            <file alias="view-group.svg">png/view-group.svg</file>
+            <file alias="dialog-messages.svg">png/dialog-messages.svg</file>
+            <file alias="media-record-stop.svg">png/media-record-stop.svg</file>
+            <file alias="media-playback-start.svg">png/media-playback-start.svg</file>
+            <file alias="document-open.svg">png/document-open.svg</file>
+    </qresource>
+</RCC>
