@@ -258,6 +258,10 @@ class MainWindow(QT.QMainWindow):
         for node in self.conf['nodes'].values():
             if node.running():
                 continue
+            
+            # noramly not necessary
+            # for input in node.inputs.values():
+            #     input.reset_buffer_index()
             node.start()
         
         with self.mutex:
