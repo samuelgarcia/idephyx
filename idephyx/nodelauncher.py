@@ -64,6 +64,10 @@ class NodeLauncher(QT.QWidget):
                 self.state_labels[name].setText('Off')
     
     def on_start_clicked(self):
+        # fix parent
+        #~ with self.parent().mutex:
+            #~ if not self.parent().is_running: return
+        
         name = self.sender().name
         node = self.other_nodes[name]
         if not node.running():

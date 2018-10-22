@@ -166,10 +166,10 @@ class MainWindow(QT.QMainWindow):
             self.tabifyDockWidget(self.docks['controlpannel'], self.docks['cpuview'])
         
         # node launcher if present in config
-        nodelauncher = self.conf.get('nodelauncher', None)
-        if nodelauncher is not None:
+        self.nodelauncher = self.conf.get('nodelauncher', None)
+        if self.nodelauncher is not None:
             self.docks['nodelauncher'] = QT.QDockWidget('nodelauncher',self)
-            self.docks['nodelauncher'].setWidget(nodelauncher)
+            self.docks['nodelauncher'].setWidget(self.nodelauncher)
             self.tabifyDockWidget(self.docks['controlpannel'], self.docks['nodelauncher'])
         
         
@@ -269,6 +269,9 @@ class MainWindow(QT.QMainWindow):
     @DebugDecorator
     def stop_nodes(self, v=None):
         print('stop_nodes')
+        if self.nodelauncher is not None:
+            self.nodelauncher.stop_all()
+            
         for node in self.conf['nodes'].values():
             if not node.running():
                 continue
