@@ -139,6 +139,8 @@ class MainWindow(QT.QMainWindow):
 
     def _apply_configuration(self, configuration_file):
         
+        os.chdir(os.path.dirname(os.path.abspath(configuration_file)))
+        
         self.conf = {}
         with open(configuration_file) as f:
             exec(f.read(), None, self.conf)

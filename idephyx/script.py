@@ -14,9 +14,11 @@ import idephyx
 #~ txt_command_list = ', '.join(comand_list)
 
 
-def open_mainwindow():
+def open_mainwindow(configuration_file=None):
         app = pg.mkQApp()
         win = idephyx.MainWindow()
+        if configuration_file is not None:
+            win.open_configuration(configuration_file=configuration_file)
         win.show()
         app.exec_()            
 
@@ -24,7 +26,7 @@ def main():
     argv = sys.argv[1:]
 
     parser = argparse.ArgumentParser(description='idephyx')
-    #~ parser.add_argument('command', help='command in [{}]'.format(txt_command_list), default='mainwin', nargs='?')
+    parser.add_argument('configuration_file', help='configuration file (.py)', default=None, nargs='?')
     
     #~ parser.add_argument('-d', '--dirname', help='working directory', default=None)
     #~ parser.add_argument('-c', '--chan_grp', type=int, help='channel group index', default=0)
@@ -36,7 +38,7 @@ def main():
     #~ print(args)
     #~ print(args.command)
     
-    #~ command = args.command
+    configuration_file = args.configuration_file
     #~ if not command in comand_list:
         #~ print('command should be in [{}]'.format(txt_command_list))
         #~ exit()

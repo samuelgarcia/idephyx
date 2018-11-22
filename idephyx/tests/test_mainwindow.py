@@ -29,4 +29,4 @@ def test_mainwindow_from_example():
 if __name__ == '__main__':
     test_mainwindow_with_last_config()
     
-    #~ test_mainwindow_from_example()
+    test_mainwindow_from_example()
