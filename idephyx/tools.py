@@ -6,8 +6,9 @@ def check_annotations(annotations, annotations_for_naming):
     #check annotations
     _all_ann_names = []
     for p in annotations:
-        assert '_' not in p['name'], 'Problem in annotations. Donot use "_"'
-        assert '=' not in p['name'], 'Problem in annotations. Donot use "="'
+        if p['name'] in annotations_for_naming:
+            assert '_' not in p['name'], 'Problem in annotations. Donot use "_"'
+            assert '=' not in p['name'], 'Problem in annotations. Donot use "="'
         _all_ann_names.append(p['name'])
 
     for _name in annotations_for_naming:
