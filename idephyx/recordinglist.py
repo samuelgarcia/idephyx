@@ -13,10 +13,11 @@ import pyqtgraph as pg
 only_today = 'only today'
 
 class RecordingList(QT.QWidget):
-    def __init__(self, recording_path, parent=None):
+    def __init__(self, recording_path, viewer_func=None, parent=None):
         QT.QWidget.__init__(self, parent=parent)
         
         self.recording_path = recording_path
+        self.viewer_func = viewer_func
         
         
         self.setMinimumSize(10,10)
@@ -31,7 +32,7 @@ class RecordingList(QT.QWidget):
         
         self.rec_list = QT.QTreeWidget(columnCount=1)
         layout.addWidget(self.rec_list)
-        self.rec_list.itemDoubleClicked.connect( self.open_fileexplorer)
+        self.rec_list.itemDoubleClicked.connect( self.on_double_click)
         
         self.refresh_list()
         
@@ -88,21 +89,31 @@ class RecordingList(QT.QWidget):
         #~ self.list.append( {'name' : name, 'dirname': dirname, 'rec_datetime' : rec_datetime, 'item' : item , 'state' : state})
         #~ self.rec_list.addTopLevelItem(item)
     
-    def open_fileexplorer(self, item, column):
-        #~ print item.index.row()
-        #~ i = self.rec_list.	indexOfTopLevelItem(item)
-        #~ name = self.rec_list.
+    
+    def on_double_click(self, item, column):
         name = item.text(0)
         
-        fullpath = os.path.join(self.recording_path, name)
+        folder = os.path.join(self.recording_path, name)
+        print('folder', folder)
         
-        #~ dirname = self.list[i]['dirname']
+        if self.viewer_func is not None:
+            #~ try:
+            if 1:
+                viewer = self.viewer_func(folder, parent=self)
+                viewer.show()
+            #~ except:
+                #~ print('erreur viewer')
+        else:
+            self.open_fileexplorer(folder)
+    
+    
+    def open_fileexplorer(self, folder):
 
 
         if sys.platform.startswith('win'):
-            os.startfile(fullpath)
+            os.startfile(folder)
         elif sys.platform.startswith('linux'):
-            os.system('xdg-open "{}"'.format(fullpath))
+            os.system('xdg-open "{}"'.format(folder))
         elif sys.platform== 'darwin' :
-            os.system('open "{}"'.format(fullpath))
+            os.system('open "{}"'.format(folder))
 

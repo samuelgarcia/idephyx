@@ -194,7 +194,10 @@ class MainWindow(QT.QMainWindow):
             self.docks['annotations'].setWidget(self.tree_annotations)
             self.addDockWidget(QT.Qt.RightDockWidgetArea, self.docks['annotations'])
             
-            self.recording_list = RecordingList(recording_path)
+            
+            viewer_func = self.conf.get('viewer_func', None)
+            print('viewer_func', viewer_func)
+            self.recording_list = RecordingList(recording_path, viewer_func=viewer_func)
             self.docks['recording_list'] = QT.QDockWidget('recording_list',self)
             self.docks['recording_list'].setWidget(self.recording_list)
             self.addDockWidget(QT.Qt.RightDockWidgetArea, self.docks['recording_list'])
