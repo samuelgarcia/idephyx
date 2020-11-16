@@ -64,22 +64,27 @@ class RecordingList(QT.QWidget):
             if not os.path.isdir(fullpath):
                 continue
             
+            annotation_file = os.path.join(fullpath, 'annotations.json')
+            
             if not (os.path.exists(os.path.join(fullpath, 'stream_properties.json')) or 
                     os.path.exists(os.path.join(fullpath, 'avi_stream_properties.json')) or 
-                    os.path.exists(os.path.join(fullpath, 'annotations.json')) ):
+                    os.path.exists(annotation_file)):
                 continue
             
-            if self.combo.currentText() == only_today:
+            if self.combo.currentText() == only_today and os.path.exists(annotation_file):
                 # check data
                 today_date = datetime.datetime.now().date()
                 
-                with open(os.path.join(fullpath, 'annotations.json'), 'r', encoding='utf8') as f:
-                    ann = json.load(f)                
-                    rec_datetime = dateutil.parser.parse(ann['rec_datetime'])
-                    if today_date != rec_datetime.date():
+                with open(annotation_file, 'r', encoding='utf8') as f:
+                    try:
+                        ann = json.load(f)                
+                        rec_datetime = dateutil.parser.parse(ann['rec_datetime'])
+                        if today_date != rec_datetime.date():
+                            continue
+                    except:
                         continue
                 
-            item = QT.QTreeWidgetItem([name])
+            item = QT.QTreeWidgetItem(['{}'.format(name)])
             self.rec_list.addTopLevelItem(item)
     
     #~ def add_rec(self, name, dirname, rec_datetime, state = 'recording'):
