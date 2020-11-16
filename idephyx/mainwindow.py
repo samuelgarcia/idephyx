@@ -4,6 +4,7 @@ import sys
 import os
 import datetime
 from collections import OrderedDict
+import time
 
 import numpy as np
 
@@ -48,6 +49,8 @@ class MainWindow(QT.QMainWindow):
         self.timer_auto_scale = QT.QTimer(singleShot=True, interval=500)
         self.timer_auto_scale.timeout.connect(self.auto_scale_all)
         
+        self.timer_rec = QT.QTimer(singleShot=False, interval=200)
+        self.timer_rec.timeout.connect(self.refresh_rec_duration)
         
         self.is_recording = False
         self.is_running = False
@@ -100,6 +103,9 @@ class MainWindow(QT.QMainWindow):
         self.act_stop_rec = QT.QAction('Stop rec', self,checkable = False, icon=QT.QIcon(":/media-record-stop.svg"))
         self.act_stop_rec.triggered.connect(self.stop_rec)
         self.toolbar.addAction(self.act_stop_rec)
+        
+        self.act_rec_duration = QT.QAction('yep')
+        self.toolbar.addAction(self.act_rec_duration)
         
         self.toolbar.addSeparator()
  
@@ -341,6 +347,8 @@ class MainWindow(QT.QMainWindow):
             but = self.toolbar.widgetForAction(self.act_start_rec)
             but.setStyleSheet("QToolButton:!hover { background-color: red }")
         
+        self.rec_time = time.perf_counter()
+        self.timer_rec.start()
     
     
     @DebugDecorator
@@ -360,6 +368,12 @@ class MainWindow(QT.QMainWindow):
             
             but = self.toolbar.widgetForAction(self.act_start_rec)
             but.setStyleSheet("")
+        
+        self.timer_rec.stop()
+
+    def refresh_rec_duration(self):
+        txt = '{:.3f}'.format(time.perf_counter() - self.rec_time)
+        self.act_rec_duration.setText(txt)
 
     def closeEvent(self, event):
         #~ print('closeEvent')
