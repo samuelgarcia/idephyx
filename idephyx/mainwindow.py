@@ -180,6 +180,14 @@ class MainWindow(QT.QMainWindow):
             self.docks['nodelauncher'].setWidget(self.nodelauncher)
             self.tabifyDockWidget(self.docks['controlpannel'], self.docks['nodelauncher'])
         
+        # rec buttons
+        if 'recorders' in self.conf and len(self.conf['recorders'])>0:
+            self.act_start_rec.setVisible(True)
+            self.act_stop_rec.setVisible(True)
+        else:
+            self.act_start_rec.setVisible(False)
+            self.act_stop_rec.setVisible(False)
+            
         
         # annotations and recording list
         annotations = self.conf.get('annotations', None)

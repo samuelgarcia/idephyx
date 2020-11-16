@@ -37,7 +37,6 @@ rec = AviRecorder()
 
 
 
-
 # node list
 nodes = {
     'camera': cam,
